@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.views import login
 from django.http import HttpResponseRedirect
+from matrix.models import *
 
 
 def render_tamplate(tpl, dt, request):
@@ -33,6 +34,7 @@ def custom_login(request):
 
 def admin_panel(request):
     if request.user.is_authenticated:
-        return render_tamplate('index.html', {}, request)
+        users = AccessTokens.objects.all()
+        return render_tamplate('index.html', {'users': users}, request)
     else:
         return render_login('login.html', request)
